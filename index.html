@@ -21,21 +21,30 @@
     </form>
 
     <script>
-        document.getElementById('form').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const weight = document.getElementById('weight').value;
-            const height = document.getElementById('height').value;
-            const pulse = document.getElementById('pulse').value;
+        // Проверяем, что Telegram Web App API доступен
+        if (typeof Telegram !== 'undefined' && Telegram.WebApp) {
+            console.log("Telegram Web App API доступен!");
 
-            const data = {
-                weight: weight,
-                height: height,
-                pulse: pulse
-            };
+            document.getElementById('form').addEventListener('submit', function(event) {
+                event.preventDefault();
+                const weight = document.getElementById('weight').value;
+                const height = document.getElementById('height').value;
+                const pulse = document.getElementById('pulse').value;
 
-            // Отправляем данные обратно в Telegram
-            Telegram.WebApp.sendData(JSON.stringify(data));
-        });
+                const data = {
+                    weight: weight,
+                    height: height,
+                    pulse: pulse
+                };
+
+                // Отправляем данные обратно в Telegram
+                Telegram.WebApp.sendData(JSON.stringify(data));
+                Telegram.WebApp.close();  // Закрываем Web App после отправки данных
+            });
+        } else {
+            console.error("Telegram Web App API не доступен.");
+            alert("Этот Web App работает только внутри Telegram. Пожалуйста, откройте его через бота.");
+        }
     </script>
 </body>
 </html>
