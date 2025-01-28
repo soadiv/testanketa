@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Анкета</title>
+    <!-- Подключаем скрипт Telegram Web App -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
     <h1>Анкета</h1>
@@ -22,29 +24,39 @@
 
     <script>
         // Проверяем, что Telegram Web App API доступен
-        if (typeof Telegram !== 'undefined' && Telegram.WebApp) {
-            console.log("Telegram Web App API доступен!");
+        function initTelegramWebApp() {
+            if (typeof Telegram !== 'undefined' && Telegram.WebApp) {
+                console.log("Telegram Web App API доступен!");
 
-            document.getElementById('form').addEventListener('submit', function(event) {
-                event.preventDefault();
-                const weight = document.getElementById('weight').value;
-                const height = document.getElementById('height').value;
-                const pulse = document.getElementById('pulse').value;
+                document.getElementById('form').addEventListener('submit', function(event) {
+                    event.preventDefault();
+                    const weight = document.getElementById('weight').value;
+                    const height = document.getElementById('height').value;
+                    const pulse = document.getElementById('pulse').value;
 
-                const data = {
-                    weight: weight,
-                    height: height,
-                    pulse: pulse
-                };
+                    const data = {
+                        weight: weight,
+                        height: height,
+                        pulse: pulse
+                    };
 
-                // Отправляем данные обратно в Telegram
-                Telegram.WebApp.sendData(JSON.stringify(data));
-                Telegram.WebApp.close();  // Закрываем Web App после отправки данных
-            });
-        } else {
-            console.error("Telegram Web App API не доступен.");
-            alert("Этот Web App работает только внутри Telegram. Пожалуйста, откройте его через бота.");
+                    console.log("Данные для отправки:", data);
+
+                    // Отправляем данные обратно в Telegram
+                    Telegram.WebApp.sendData(JSON.stringify(data));
+                    console.log("Данные отправлены!");
+
+                    // Закрываем Web App после отправки данных
+                    Telegram.WebApp.close();
+                });
+            } else {
+                console.error("Telegram Web App API не доступен.");
+                alert("Этот Web App работает только внутри Telegram. Пожалуйста, откройте его через бота.");
+            }
         }
+
+        // Инициализация Telegram Web App
+        initTelegramWebApp();
     </script>
 </body>
 </html>
