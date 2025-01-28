@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Анкета</title>
+</head>
+<body>
+    <h1>Анкета</h1>
+    <form id="form">
+        <label for="weight">Ваш вес:</label>
+        <input type="number" id="weight" name="weight" required><br><br>
+
+        <label for="height">Ваш рост:</label>
+        <input type="number" id="height" name="height" required><br><br>
+
+        <label for="pulse">Ваш пульс:</label>
+        <input type="number" id="pulse" name="pulse" required><br><br>
+
+        <button type="submit">Отправить</button>
+    </form>
+
+    <script>
+        document.getElementById('form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const weight = document.getElementById('weight').value;
+            const height = document.getElementById('height').value;
+            const pulse = document.getElementById('pulse').value;
+
+            const data = {
+                weight: weight,
+                height: height,
+                pulse: pulse
+            };
+
+            // Отправляем данные обратно в Telegram
+            Telegram.WebApp.sendData(JSON.stringify(data));
+        });
+    </script>
+</body>
+</html>
