@@ -64,14 +64,38 @@ input, textarea {
     border: 2px solid #e0e0e0;
     border-radius: 8px;
     font-size: 16px;
-    transition: all 0.3s ease;
+    font-family: 'Segoe UI', 'Arial', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    background: #fff;
+    color: #222;
+    box-sizing: border-box;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
 }
 
-input:focus, textarea:focus {
+input:focus, textarea:focus, input.focused, textarea.focused {
     border-color: var(--secondary);
     box-shadow: 0 0 8px rgba(52, 152, 219, 0.2);
     outline: none;
-    transform: scale(1.02);
+}
+
+/* Safari-specific fix for textarea resizing bug */
+textarea {
+    resize: vertical;
+    min-height: 80px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+/* Remove autofill background in Safari */
+input:-webkit-autofill,
+textarea:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px #fff inset !important;
+    box-shadow: 0 0 0 1000px #fff inset !important;
+    -webkit-text-fill-color: #222 !important;
 }
 
 button {
